@@ -32,6 +32,12 @@ public class EntryController {
         return offerService.getOfferById(offerId);
     }
 
+    @RequestMapping(value = "/offer/{offerId}", method = RequestMethod.DELETE)
+    public void deleteOfferById(@PathVariable("offerId") long offerId, HttpServletResponse response) {
+        offerService.deleteOfferById(offerId);
+        response.setStatus(HttpStatus.NO_CONTENT.value());
+    }
+
 /*    // uncomment for additional dev-testing
     @RequestMapping(value = "/offers", method = RequestMethod.GET)
     public List<Offer> getAllOffers() {

@@ -69,7 +69,7 @@ public class DefaultOfferService implements OfferService {
 
 		long offerId = offerDTO.getOfferId();
 		String description = offerDTO.getDescription();
-		long price = offerDTO.getPrice();
+		double price = offerDTO.getPrice();
 		long duration = offerDTO.getDuration();
 
 		Offer offer = new Offer(offerId, description, price, duration, null);
@@ -84,10 +84,20 @@ public class DefaultOfferService implements OfferService {
 			throw new ResourceNotFoundException(offerId, EXCEPTION_MESSAGE_OFFER_NOT_FOUND);
 
 		String description = offer.getDescription();
-		long price = offer.getPrice();
+		double price = offer.getPrice();
 		long duration = offer.getDuration();
 
 		return new OfferDTO(offerId, description, price, duration);
+	}
+
+	@Override
+	public void deleteOfferById(long offerId) throws ResourceNotFoundException {
+		Offer offer = offerRepository.findOne(offerId);
+
+		if (offer == null)
+			throw new ResourceNotFoundException(offerId, EXCEPTION_MESSAGE_OFFER_NOT_FOUND);
+
+		offerRepository.delete(offerId);		
 	}
 
 	/*

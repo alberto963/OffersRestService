@@ -26,7 +26,7 @@ public class Offer implements Serializable {
 
 	@NotNull
 	@Column(unique = false, updatable = false, name = "PRICE")
-	private Long price;
+	private Double price;
 
 	@NotNull
 	@Column(unique = false, updatable = false, name = "DURATION")
@@ -35,7 +35,7 @@ public class Offer implements Serializable {
 	public Offer() {
 	}
 
-	public Offer(Long offerId, String description, Long price, Long duration, List<String> comments) {
+	public Offer(Long offerId, String description, Double price, Long duration, List<String> comments) {
 		this.offerId = offerId;
 		this.description = description;
 		this.price = price;
@@ -81,11 +81,11 @@ public class Offer implements Serializable {
 		return result;
 	}
 
-	public Long getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(Long price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 

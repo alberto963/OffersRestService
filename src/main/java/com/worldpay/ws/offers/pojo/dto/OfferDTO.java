@@ -14,7 +14,7 @@ public class OfferDTO implements Serializable {
     private String description;
 
     @NotNull
-    private Long price;
+    private Double price;
 
     @NotNull
     private Long duration;
@@ -22,7 +22,7 @@ public class OfferDTO implements Serializable {
     public OfferDTO() {
     }
 
-    public OfferDTO(Long offerId, String description, Long price, Long duration) {
+    public OfferDTO(Long offerId, String description, Double price, Long duration) {
         this.offerId = offerId;
         this.description = description;
         this.price = price;
@@ -45,11 +45,11 @@ public class OfferDTO implements Serializable {
         this.description = description;
     }
 
-    public Long getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
     

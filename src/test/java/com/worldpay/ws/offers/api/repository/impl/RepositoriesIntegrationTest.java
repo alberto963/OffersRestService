@@ -1,6 +1,8 @@
 package com.worldpay.ws.offers.api.repository.impl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
@@ -27,7 +29,7 @@ public class RepositoriesIntegrationTest {
     @Test
     public void save_whenOfferIsSaved_thenCanBeRetrieved() {
         // given
-        Offer validOffer = new Offer(1L, "description", 0L, 1L, null);
+        Offer validOffer = new Offer(1L, "description", 9.99D, 1L, null);
         testEntityManager.persist(validOffer);
         testEntityManager.flush();
 
@@ -38,10 +40,24 @@ public class RepositoriesIntegrationTest {
         assertEquals(validOffer.getOfferId(), found.getOfferId());
     }
 
+    @Test
+    public void save_whenOfferIsSaved_thenCanBeDeleted() {
+        // given
+        Offer validOffer = new Offer(1L, "description", 9.99D, 1L, null);
+        testEntityManager.persist(validOffer);
+        testEntityManager.flush();
+
+        // when
+        offerRepository.delete(validOffer.getOfferId());
+
+        Offer notFount = offerRepository.findOne(validOffer.getOfferId());
+        assertNull(notFount);
+    }
+    
     @Test(expected = ConstraintViolationException.class)
     public void validation_whenOfferHasEmptyDescription_thenConstraintViolationException() {
         // given
-        Offer invalidOffer = new Offer(1L, "", 0L, 1L, null);
+        Offer invalidOffer = new Offer(1L, "", 9.99D, 1L, null);
 
         // when
         testEntityManager.persist(invalidOffer);
@@ -51,7 +67,7 @@ public class RepositoriesIntegrationTest {
     @Test(expected = ConstraintViolationException.class)
     public void validation_whenOfferHasMissingDescription_thenConstraintViolationException() {
         // given
-        Offer invalidOffer = new Offer(1L, null, 0L, 1L, null);
+        Offer invalidOffer = new Offer(1L, null, 9.99D, 1L, null);
 
         // when
         testEntityManager.persist(invalidOffer);

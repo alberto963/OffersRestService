@@ -67,6 +67,19 @@ public class DefaultOfferServiceTest {
         // then
         assertNotNull(resultOfferDTO);
     }
+    
+    @Test
+    public void deleteOfferById_whenOfferExists_thenReturnIsSuccessful() {
+        // given
+        givenDummyOffer();
+        given(offerRepository.findOne(anyLong())).willReturn(new Offer());
+
+        // when
+        defaultOfferService.deleteOfferById(anyLong());
+
+        // then
+        verify(offerRepository, times(1)).delete(anyLong());
+    }
 
     @Test(expected = ResourceNotFoundException.class)
     public void getOfferById_whenOfferNotExist_thenResourceNotFoundException() {
@@ -78,10 +91,10 @@ public class DefaultOfferServiceTest {
     }
 
     private void givenDummyOfferDTO() {
-        dummyOfferDTO = new OfferDTO(1L, "description", 0L, 1L);
+        dummyOfferDTO = new OfferDTO(1L, "description", 9.99D, 1L);
     }
 
     private void givenDummyOffer() {
-        dummyOffer = new Offer(1L, "description", 0L, 1L, null);
+        dummyOffer = new Offer(1L, "description", 9.99, 1L, null);
     }
 }

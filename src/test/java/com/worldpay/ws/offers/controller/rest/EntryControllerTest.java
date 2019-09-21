@@ -6,6 +6,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -54,6 +55,18 @@ public class EntryControllerTest {
 	}
 
 	@Test
+	public void delete_whenOfferExists_thenResponseIs200() throws Exception {
+		// given
+		givenDummyOfferDTO();
+		given(offerService.getOfferById(dummyOfferDTO.getOfferId())).willReturn(dummyOfferDTO);
+
+		// when-then
+		mockMvc.perform(
+				delete(buildDeleteUrlWithIdVariable(OFFER_SUBPATH), dummyOfferDTO.getOfferId()).contentType(APPLICATION_JSON))
+				.andExpect(status().isNoContent());
+	}
+
+	@Test
 	public void get_whenOfferExists_thenJsonResponseIsCorrect() throws Exception {
 		// given
 		givenDummyOfferDTO();
@@ -80,7 +93,7 @@ public class EntryControllerTest {
 	@Test
 	public void post_whenOfferHasMissingId_thenResponseIs400() throws Exception {
 		// given
-		OfferDTO invalidOfferDTO = new OfferDTO(null, "description", 0L, 1L);
+		OfferDTO invalidOfferDTO = new OfferDTO(null, "description", 9.99D, 1L);
 		doNothing().when(offerService).addOffer(invalidOfferDTO);
 
 		// when-then
@@ -89,7 +102,7 @@ public class EntryControllerTest {
 	}
 
 	private void givenDummyOfferDTO() {
-		dummyOfferDTO = new OfferDTO(1L, "description", 0L, 1L);
+		dummyOfferDTO = new OfferDTO(1L, "description", 9.99D, 1L);
 	}
 
 	private String buildPostUrl(String subPath) {
@@ -97,6 +110,10 @@ public class EntryControllerTest {
 	}
 
 	private String buildGetUrlWithIdVariable(String subPath) {
+		return new StringBuilder().append(BASE_URL).append("/").append(subPath).append("/{id}").toString();
+	}
+	
+	private String buildDeleteUrlWithIdVariable(String subPath) {
 		return new StringBuilder().append(BASE_URL).append("/").append(subPath).append("/{id}").toString();
 	}
 }

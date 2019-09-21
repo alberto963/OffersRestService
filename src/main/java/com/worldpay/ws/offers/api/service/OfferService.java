@@ -10,5 +10,7 @@ public interface OfferService {
 
     OfferDTO getOfferById(long offerId) throws ResourceNotFoundException;
 
+	void deleteOfferById(long offerId);
+
 /*    List<Offer> getAllOffers();*/
 }
