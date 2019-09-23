@@ -4,61 +4,34 @@ import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class OfferDTO implements Serializable {
+public class OfferDTO extends BaseOfferDTO {
 
-    @NotNull
-    private Long offerId;
-
-    @NotNull
-    @Size(min=1)
-    private String description;
-
-    @NotNull
-    private Double price;
-
-    @NotNull
-    private Long duration;
-
-    public OfferDTO() {
-    }
-
-    public OfferDTO(Long offerId, String description, Double price, Long duration) {
-        this.offerId = offerId;
-        this.description = description;
-        this.price = price;
-        this.duration = duration;
-    }
-
-    public Long getOfferId() {
-        return offerId;
-    }
-
-    public void setOfferId(Long offerId) {
-        this.offerId = offerId;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
+    private Long createdAt;
     
-    public Long getDuration() {
-        return duration;
+    private Boolean expired;
+
+    public OfferDTO(Long offerId, String description, Double price, Long duration, Long createdAt, Boolean expired) {
+		super(offerId, description, price, duration);
+		this.createdAt = createdAt;
+		this.expired = expired;
+	}
+
+	public Boolean getExpired() {
+		return expired;
+	}
+
+	public void setExpired(Boolean expired) {
+		this.expired = expired;
+	}
+
+	public OfferDTO() {
     }
 
-    public void setDuration(Long duration) {
-        this.duration = duration;
-    }
+    public Long getCreatedAt() {
+		return createdAt;
+	}
 
+	public void setCreatedAt(Long createdAt) {
+		this.createdAt = createdAt;
+	}
 }

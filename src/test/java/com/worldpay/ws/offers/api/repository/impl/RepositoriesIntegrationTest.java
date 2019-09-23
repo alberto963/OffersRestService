@@ -29,7 +29,7 @@ public class RepositoriesIntegrationTest {
     @Test
     public void save_whenOfferIsSaved_thenCanBeRetrieved() {
         // given
-        Offer validOffer = new Offer(1L, "description", 9.99D, 1L, null);
+        Offer validOffer = new Offer(1L, "description", 9.99D, 1L, 0L);
         testEntityManager.persist(validOffer);
         testEntityManager.flush();
 
@@ -43,7 +43,7 @@ public class RepositoriesIntegrationTest {
     @Test
     public void save_whenOfferIsSaved_thenCanBeDeleted() {
         // given
-        Offer validOffer = new Offer(1L, "description", 9.99D, 1L, null);
+        Offer validOffer = new Offer(1L, "description", 9.99D, 1L, 0L);
         testEntityManager.persist(validOffer);
         testEntityManager.flush();
 
@@ -57,7 +57,7 @@ public class RepositoriesIntegrationTest {
     @Test(expected = ConstraintViolationException.class)
     public void validation_whenOfferHasEmptyDescription_thenConstraintViolationException() {
         // given
-        Offer invalidOffer = new Offer(1L, "", 9.99D, 1L, null);
+        Offer invalidOffer = new Offer(1L, "", 9.99D, 1L, 0L);
 
         // when
         testEntityManager.persist(invalidOffer);
@@ -67,7 +67,7 @@ public class RepositoriesIntegrationTest {
     @Test(expected = ConstraintViolationException.class)
     public void validation_whenOfferHasMissingDescription_thenConstraintViolationException() {
         // given
-        Offer invalidOffer = new Offer(1L, null, 9.99D, 1L, null);
+        Offer invalidOffer = new Offer(1L, null, 9.99D, 1L, 0L);
 
         // when
         testEntityManager.persist(invalidOffer);

@@ -13,6 +13,7 @@ import com.worldpay.ws.offers.api.error.exception.ResourceNotFoundException;
 import com.worldpay.ws.offers.api.repository.OfferRepository;
 import com.worldpay.ws.offers.api.service.OfferService;
 import com.worldpay.ws.offers.pojo.bean.Offer;
+import com.worldpay.ws.offers.pojo.dto.BaseOfferDTO;
 import com.worldpay.ws.offers.pojo.dto.OfferDTO;
 
 @Service
@@ -39,7 +40,7 @@ public class DefaultOfferService implements OfferService {
 	 */
 	@Override
 	@Transactional(isolation = Isolation.SERIALIZABLE)
-	public void addOffer(OfferDTO offerDTO) throws DuplicateOfferIdException {
+	public void addOffer(BaseOfferDTO offerDTO) throws DuplicateOfferIdException {
 
 		/*
 		 * CAVEAT In Spring JPA, SimpleJpaRepository.save() is implemented as follows:
@@ -71,8 +72,9 @@ public class DefaultOfferService implements OfferService {
 		String description = offerDTO.getDescription();
 		double price = offerDTO.getPrice();
 		long duration = offerDTO.getDuration();
+		long createdAt = System.currentTimeMillis();
 
-		Offer offer = new Offer(offerId, description, price, duration, null);
+		Offer offer = new Offer(offerId, description, price, duration, createdAt);
 		offerRepository.save(offer);
 	}
 
@@ -86,8 +88,10 @@ public class DefaultOfferService implements OfferService {
 		String description = offer.getDescription();
 		double price = offer.getPrice();
 		long duration = offer.getDuration();
+		long createdAt = offer.getCreatedAt();
+		Boolean expired = System.currentTimeMillis() - createdAt > duration;
 
-		return new OfferDTO(offerId, description, price, duration);
+		return new OfferDTO(offerId, description, price, duration, createdAt, expired);
 	}
 
 	@Override

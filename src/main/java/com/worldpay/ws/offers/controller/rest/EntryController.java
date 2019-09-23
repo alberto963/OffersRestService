@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.worldpay.ws.offers.api.service.OfferService;
+import com.worldpay.ws.offers.pojo.dto.BaseOfferDTO;
 import com.worldpay.ws.offers.pojo.dto.OfferDTO;
 
 @RestController
@@ -22,7 +23,7 @@ public class EntryController {
     private OfferService offerService;
 
     @RequestMapping(value = "/offer", method = RequestMethod.POST)
-    public void addOffer(@Valid @RequestBody OfferDTO offerDTO, HttpServletResponse response) {
+    public void addOffer(@Valid @RequestBody BaseOfferDTO offerDTO, HttpServletResponse response) {
         offerService.addOffer(offerDTO);
         response.setStatus(HttpStatus.CREATED.value());
     }

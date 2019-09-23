@@ -32,14 +32,27 @@ public class Offer implements Serializable {
 	@Column(unique = false, updatable = false, name = "DURATION")
 	private Long duration;
 
+	@NotNull
+	@Column(unique = false, updatable = false, name = "CREATED_AT")
+	private Long createdAt;
+
 	public Offer() {
 	}
 
-	public Offer(Long offerId, String description, Double price, Long duration, List<String> comments) {
+	public Offer(Long offerId, String description, Double price, Long duration, Long createdAt) {
 		this.offerId = offerId;
 		this.description = description;
 		this.price = price;
 		this.duration = duration;
+		this.createdAt = createdAt;
+	}
+
+	public Long getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Long createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	public Long getOfferId() {

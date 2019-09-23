@@ -91,10 +91,10 @@ public class DefaultOfferServiceTest {
     }
 
     private void givenDummyOfferDTO() {
-        dummyOfferDTO = new OfferDTO(1L, "description", 9.99D, 1L);
+        dummyOfferDTO = new OfferDTO(1L, "description", 9.99D, 1L, 0L, false);
     }
 
     private void givenDummyOffer() {
-        dummyOffer = new Offer(1L, "description", 9.99, 1L, null);
+        dummyOffer = new Offer(1L, "description", 9.99, 1L, 0L);
     }
 }

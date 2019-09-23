@@ -93,7 +93,7 @@ public class EntryControllerTest {
 	@Test
 	public void post_whenOfferHasMissingId_thenResponseIs400() throws Exception {
 		// given
-		OfferDTO invalidOfferDTO = new OfferDTO(null, "description", 9.99D, 1L);
+		OfferDTO invalidOfferDTO = new OfferDTO(null, "description", 9.99D, 1L, 0L, false);
 		doNothing().when(offerService).addOffer(invalidOfferDTO);
 
 		// when-then
@@ -102,7 +102,7 @@ public class EntryControllerTest {
 	}
 
 	private void givenDummyOfferDTO() {
-		dummyOfferDTO = new OfferDTO(1L, "description", 9.99D, 1L);
+		dummyOfferDTO = new OfferDTO(1L, "description", 9.99D, 1L, 0L, false);
 	}
 
 	private String buildPostUrl(String subPath) {
