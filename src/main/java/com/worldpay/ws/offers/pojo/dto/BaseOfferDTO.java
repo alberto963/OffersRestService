@@ -6,19 +6,9 @@ import javax.validation.constraints.Size;
 
 public class BaseOfferDTO implements Serializable {
 
-    private Long id;
-    
-    public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	@NotNull
     @Size(min=3)
-    private String offerId;
+    private Long offerId;
 
     @NotNull
     @Size(min=1)
@@ -30,9 +20,8 @@ public class BaseOfferDTO implements Serializable {
     @NotNull
     private Long duration;
     
-    public BaseOfferDTO(Long id, String offerId, String description, Double price, Long duration) {
+    public BaseOfferDTO(Long offerId, String description, Double price, Long duration) {
 		super();
-		this.id = id;
 		this.offerId = offerId;
 		this.description = description;
 		this.price = price;
@@ -42,11 +31,11 @@ public class BaseOfferDTO implements Serializable {
 	public BaseOfferDTO() {
     }
 
-	public String getOfferId() {
+	public Long getOfferId() {
         return offerId;
     }
 
-    public void setOfferId(String offerId) {
+    public void setOfferId(Long offerId) {
         this.offerId = offerId;
     }
 
