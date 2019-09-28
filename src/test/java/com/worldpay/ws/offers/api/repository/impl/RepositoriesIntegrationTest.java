@@ -3,6 +3,8 @@ package com.worldpay.ws.offers.api.repository.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import java.util.List;
+
 import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
@@ -52,6 +54,22 @@ public class RepositoriesIntegrationTest {
 
         Offer notFount = offerRepository.findOne(validOffer.getOfferId());
         assertNull(notFount);
+    }
+    
+    @Test
+    public void save_whenOfferAreSaved_thenCanBeAllRetrieved() {
+        // given
+        Offer validOffer1 = new Offer(1L, "description", 9.99D, 1L, 0L);
+        testEntityManager.persist(validOffer1);
+        Offer validOffer2 = new Offer(2L, "description", 9.99D, 1L, 0L);
+        testEntityManager.persist(validOffer2);
+        testEntityManager.flush();
+
+        // when
+        long found = offerRepository.count();
+
+        // then
+        assertEquals(2, found);
     }
     
     @Test(expected = ConstraintViolationException.class)

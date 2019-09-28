@@ -1,6 +1,7 @@
 package com.worldpay.ws.offers.controller.rest;
 
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -9,6 +10,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.JsonPathResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.worldpay.ws.offers.api.service.OfferService;
@@ -37,10 +44,11 @@ public class EntryControllerTest {
 	@MockBean
 	private OfferService offerService;
 
-	private OfferDTO dummyOfferDTO;
+	private OfferDTO dummyOfferDTO, dummyOfferDTO2;
 
 	private static final String BASE_URL = "/worldpay/ws";
 	private static final String OFFER_SUBPATH = "offer";
+	private static final String OFFERS_SUBPATH = "offers";
 
 	@Test
 	public void get_whenOfferExists_thenResponseIs200() throws Exception {
@@ -80,6 +88,23 @@ public class EntryControllerTest {
 	}
 
 	@Test
+	public void get_whenOffersExists_thenJsonResponseIsCorrect() throws Exception {
+		// given
+		givenDummyOfferDTO();
+		List<OfferDTO> offers = new LinkedList<OfferDTO>();
+		offers.add(dummyOfferDTO);
+		givenDummyOfferDTO2();
+		offers.add(dummyOfferDTO2);
+		given(offerService.getAllOffers()).willReturn(offers);
+
+		// when-then
+		mockMvc.perform(
+				get(buildGetUrl(OFFERS_SUBPATH)).contentType(APPLICATION_JSON))
+				.andExpect(jsonPath("[1].offerId", is(dummyOfferDTO2.getOfferId().intValue())))
+				.andExpect(jsonPath("[0].offerId", is(dummyOfferDTO.getOfferId().intValue())));
+	}
+	
+	@Test
 	public void post_whenOfferIsValid_thenResponseIs201() throws Exception {
 		// given
 		givenDummyOfferDTO();
@@ -105,7 +130,15 @@ public class EntryControllerTest {
 		dummyOfferDTO = new OfferDTO(1L, "description", 9.99D, 1L, 0L, false);
 	}
 
+	private void givenDummyOfferDTO2() {
+		dummyOfferDTO2 = new OfferDTO(2L, "description", 9.99D, 1L, 0L, false);
+	}
+	
 	private String buildPostUrl(String subPath) {
+		return new StringBuilder().append(BASE_URL).append("/").append(subPath).toString();
+	}
+
+	private String buildGetUrl(String subPath) {
 		return new StringBuilder().append(BASE_URL).append("/").append(subPath).toString();
 	}
 

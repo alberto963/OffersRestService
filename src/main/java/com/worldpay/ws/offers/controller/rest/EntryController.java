@@ -1,5 +1,7 @@
 package com.worldpay.ws.offers.controller.rest;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -39,14 +41,8 @@ public class EntryController {
         response.setStatus(HttpStatus.NO_CONTENT.value());
     }
 
-/*    // uncomment for additional dev-testing
     @RequestMapping(value = "/offers", method = RequestMethod.GET)
-    public List<Offer> getAllOffers() {
+    public List<OfferDTO> getAllOffers() {
         return offerService.getAllOffers();
     }
-
-    @RequestMapping(value = "/comments", method = RequestMethod.GET)
-    public List<Comment> getAllComments() {
-        return commentService.getAllComments();
-    }*/
 }

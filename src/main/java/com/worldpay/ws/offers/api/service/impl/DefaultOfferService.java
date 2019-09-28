@@ -3,6 +3,9 @@ package com.worldpay.ws.offers.api.service.impl;
 import static com.worldpay.ws.offers.api.error.message.ExceptionMessage.EXCEPTION_MESSAGE_DUPLICATE_OFFER_ID;
 import static com.worldpay.ws.offers.api.error.message.ExceptionMessage.EXCEPTION_MESSAGE_OFFER_NOT_FOUND;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -101,12 +104,24 @@ public class DefaultOfferService implements OfferService {
 		if (offer == null)
 			throw new ResourceNotFoundException(offerId, EXCEPTION_MESSAGE_OFFER_NOT_FOUND);
 
-		offerRepository.delete(offerId);		
+		offerRepository.delete(offerId);
 	}
 
-	/*
-	 * @Override public List<Offer> getAllOffers() { List<Offer> offers = new
-	 * LinkedList<>(); offerRepository.findAll() .forEach(offers::add); return
-	 * offers; }
-	 */
+	@Override
+	public List<OfferDTO> getAllOffers() {
+		List<OfferDTO> offers = new LinkedList<>();
+		offerRepository.findAll().forEach(offer -> {
+			String description = offer.getDescription();
+			double price = offer.getPrice();
+			long duration = offer.getDuration();
+			long createdAt = offer.getCreatedAt();
+			Boolean expired = System.currentTimeMillis() - createdAt > duration;
+
+			Long offerId = offer.getOfferId();
+			OfferDTO o = new OfferDTO(offerId , description, price, duration, createdAt, expired);
+			offers.add(o);
+		});
+
+		return offers;
+	}
 }

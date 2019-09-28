@@ -90,10 +90,33 @@ public class DefaultOfferServiceTest {
         defaultOfferService.getOfferById(anyLong());
     }
 
+    @Test
+    public void addOffers_whenOfferAreNotDuplicate_thenAreSaved() {
+        // given
+        givenDummyOfferDTO(1L);
+        given(offerRepository.findOne(dummyOfferDTO.getOfferId())).willReturn(null);
+        
+        // when
+        defaultOfferService.addOffer(dummyOfferDTO);
+        
+        givenDummyOfferDTO(2L);
+        given(offerRepository.findOne(dummyOfferDTO.getOfferId())).willReturn(null);
+        
+        // when
+        defaultOfferService.addOffer(dummyOfferDTO);
+
+        // then
+        verify(offerRepository, times(2)).save(any(Offer.class));
+    }
+    
     private void givenDummyOfferDTO() {
         dummyOfferDTO = new OfferDTO(1L, "description", 9.99D, 1L, 0L, false);
     }
 
+    private void givenDummyOfferDTO(Long offerId) {
+        dummyOfferDTO = new OfferDTO(offerId, "description", 9.99D, 1L, 0L, false);
+    }
+    
     private void givenDummyOffer() {
         dummyOffer = new Offer(1L, "description", 9.99, 1L, 0L);
     }

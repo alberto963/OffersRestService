@@ -7,7 +7,6 @@ import javax.validation.constraints.Size;
 public class BaseOfferDTO implements Serializable {
 
 	@NotNull
-    @Size(min=3)
     private Long offerId;
 
     @NotNull
