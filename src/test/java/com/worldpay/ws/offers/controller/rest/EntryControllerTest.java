@@ -1,7 +1,6 @@
 package com.worldpay.ws.offers.controller.rest;
 
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.Matchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -13,9 +12,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.JsonPathResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.worldpay.ws.offers.api.service.OfferService;

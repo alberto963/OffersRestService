@@ -4,17 +4,12 @@ import java.util.List;
 
 import com.worldpay.ws.offers.api.error.exception.DuplicateOfferIdException;
 import com.worldpay.ws.offers.api.error.exception.ResourceNotFoundException;
-import com.worldpay.ws.offers.pojo.bean.Offer;
 import com.worldpay.ws.offers.pojo.dto.BaseOfferDTO;
 import com.worldpay.ws.offers.pojo.dto.OfferDTO;
 
 public interface OfferService {
-
-    void addOffer(BaseOfferDTO offerDTO) throws DuplicateOfferIdException;
-
-    OfferDTO getOfferById(long offerId) throws ResourceNotFoundException;
-
-	void deleteOfferById(long offerId);
-
-	List<OfferDTO> getAllOffers();
+    public void addOffer(BaseOfferDTO offerDTO) throws DuplicateOfferIdException;
+    public OfferDTO getOfferById(long offerId) throws ResourceNotFoundException;
+	public void deleteOfferById(long offerId);
+	public List<OfferDTO> getAllOffers();
 }
