@@ -1,0 +1,18 @@
+---
+server:
+   # Define a custom port instead of the default 8080
+   port: 8091
+---
+# application.properties
+logging:
+    level:
+      com: ERROR
+      org: INFO
+      org.springframework.web: ERROR
+      org.hibernate: ERROR
+---
+spring:
+   datasource:
+      username: "AAA"
+      password: "AAA"
+     
