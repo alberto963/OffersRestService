@@ -3,7 +3,7 @@
 </h1>
 
 A RESTful facade backend API with one service:
-- Offer service (*offer entity: id, description, price, duration*)
+- Offer service (*offer entity: id, title, description, price, duration, expired*)
 
 ## Toolset
 - Spring Boot
@@ -14,7 +14,7 @@ A RESTful facade backend API with one service:
 - Hibernate
 - Jackson Annotations
   * custom serialization of references (@JsonIdentityInfo, @JsonIdentityReference)
-- Apache Derby
+- H2 embedded in memory db
 - Maven
 - Git
 - Mockito
@@ -43,55 +43,100 @@ Below all the commands to clone, build and run the project with Maven and Java 8
 - `cd OffersRestService`
 - `mvn -T 4 clean install`
 - `java -jar target/com-worldpay-ws-offers-web-1.0.jar`
-- the embedded servlet container starts at `http://localhost:4001`
+- the embedded servlet container starts at `http://localhost:8091`
 
 ## Running
 
 ### POST offers 
-- URL is `http://localhost:4001/worldpay/ws/offer`
+- URL is `http://localhost:8091/worldpay/ws/offer`
 
 JSON examples to POST an offer:
 ````
 {
-	"id": 0,
-	"offerId": "BREAD",
+	"title": "BREAD",
 	"price": 4.49,
 	"duration": 100,
 	"description": "1 KG white bread"
 }
 
 {
-	"id": 1,
-	"offerId": "BEER",
+	"title": "BEER",
 	"price": 7.29,
 	"duration": 100,
 	"description": "1 L red beer"
 }
 ````
 
-### GET offer
+### GET offer by title
 
-- URL is `http://localhost:4001/worldpay/ws/offer/{offerId}`
+- URL is `http://localhost:8091/worldpay/ws/offer/{title}`
 
 Examples of returned JSONs:
 
-**http://localhost:4001/worldpay/ws/offer/BREAD**
+**http://localhost:8091/worldpay/ws/offer/BREAD**
 ````
 {
-	"offerId": "BREAD",
+	"title": "BREAD",
     "description": "Bread",
     "price": 4.49,
     "expired": false
 }
 ````
 
-**http://localhost:4001/worldpay/ws/offer/BEER**
+**http://localhost:8091/worldpay/ws/offer/BEER**
 ````
 {
-	"offerId": "BEER",
+	"title": "BEER",
 	"description": "1 L red beer",
 	"price": 7.29,
 	"expired": true
 }
 ````
+
+### GET offer by id
+
+- URL is `http://localhost:8091/worldpay/ws/offerid/{offerId}`
+
+Examples of returned JSONs:
+
+**http://localhost:8091/worldpay/ws/offerid/1**
+````
+{
+	"title": "BREAD",
+    "description": "Bread",
+    "price": 4.49,
+    "expired": false
+}
+````
+
+**http://localhost:8091/worldpay/ws/offerid/2**
+````
+{
+	"title": "BEER",
+	"description": "1 L red beer",
+	"price": 7.29,
+	"expired": true
+}
+````
+### DELETE offer by title
+
+- URL is `http://localhost:8091/worldpay/ws/offer/{title}`
+
+Examples:
+
+**http://localhost:8091/worldpay/ws/offer/BREAD**
+
+**http://localhost:8091/worldpay/ws/offer/BEER**
+
+
+### DELETE offer by id
+
+- URL is `http://localhost:8091/worldpay/ws/offerid/{offerId}`
+
+Examples:
+
+**http://localhost:8091/worldpay/ws/offerid/1**
+
+**http://localhost:8091/worldpay/ws/offerid/2**
+
 ****

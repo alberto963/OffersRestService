@@ -29,7 +29,7 @@ public class RepositoriesIntegrationTest {
     @Test
     public void save_whenOfferIsSaved_thenCanBeRetrieved() {
         // given
-        Offer validOffer = new Offer(999999L, "description", 9.99D, 0L);
+        Offer validOffer = new Offer(999999L, "title", "description", 9.99D, 0L);
         testEntityManager.persist(validOffer);
         testEntityManager.flush();
 
@@ -43,7 +43,7 @@ public class RepositoriesIntegrationTest {
     @Test
     public void save_whenOfferIsSaved_thenCanBeDeleted() {
         // given
-        Offer validOffer = new Offer(999999L, "description", 9.99D, 0L);;
+        Offer validOffer = new Offer(999999L, "title", "description", 9.99D, 0L);;
         testEntityManager.persist(validOffer);
         testEntityManager.flush();
 
@@ -57,9 +57,9 @@ public class RepositoriesIntegrationTest {
     @Test
     public void save_whenOfferAreSaved_thenCanBeAllRetrieved() {
         // given
-        Offer validOffer1 = new Offer(999999L, "description", 9.99D, 1L);
+        Offer validOffer1 = new Offer(999999L, "title", "description", 9.99D, 1L);
         testEntityManager.persist(validOffer1);
-        Offer validOffer2 = new Offer(999999L, "description", 9.99D, 1L);
+        Offer validOffer2 = new Offer(999999L, "title", "description", 9.99D, 1L);
         testEntityManager.persist(validOffer2);
         testEntityManager.flush();
 
@@ -73,7 +73,7 @@ public class RepositoriesIntegrationTest {
     @Test(expected = ConstraintViolationException.class)
     public void validation_whenOfferHasEmptyDescription_thenConstraintViolationException() {
         // given
-        Offer invalidOffer = new Offer(999999L, "", 9.99D, 1L);
+        Offer invalidOffer = new Offer(999999L, "title", "", 9.99D, 1L);
 
         // when
         testEntityManager.persist(invalidOffer);
@@ -83,7 +83,7 @@ public class RepositoriesIntegrationTest {
     @Test(expected = ConstraintViolationException.class)
     public void validation_whenOfferHasMissingDescription_thenConstraintViolationException() {
         // given
-        Offer invalidOffer = new Offer(999999L, null, 9.99D, 1L);
+        Offer invalidOffer = new Offer(999999L, "title", null, 9.99D, 1L);
 
         // when
         testEntityManager.persist(invalidOffer);

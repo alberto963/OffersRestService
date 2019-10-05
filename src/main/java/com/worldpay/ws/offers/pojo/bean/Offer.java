@@ -10,7 +10,6 @@ import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -19,8 +18,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Offer {
 
-	public Offer(long createdAt, String description, Double price, Long duration) {
+	public Offer(long createdAt, String title, String description, Double price, Long duration) {
 		this.createdAt = createdAt;
+		this.title = title;
 		this.description = description;
 		this.price = price;
 		this.duration = duration;
@@ -28,25 +28,30 @@ public class Offer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(unique = true, updatable = false, name = "OFFER_ID")
+	@Column(unique = true, updatable = false)
 	private Long offerId;
+
+	@NotNull
+    @Size(min=3)
+	@Column(unique = true, updatable = false)
+    private String title;
 
     @NotNull
     @Size(min=1)
-	@Column(unique = false, updatable = false, name = "DESCRIPTION")
+	@Column(unique = false, updatable = false)
     private String description;
 
     @NotNull
-	@Column(unique = false, updatable = false, name = "PRICE")
+	@Column(unique = false, updatable = false)
     private Double price;
 
     @NotNull
-	@Column(unique = false, updatable = false, name = "DURATION")
+	@Column(unique = false, updatable = false)
     private Long duration;
     
-	@Column(unique = false, updatable = false, name = "CREATED_AT")
+	@Column(unique = false, updatable = false)
 	private Long createdAt;
 	
-	@Column(unique = false, updatable = false, name = "EXPIRED")
-	private Boolean expired;
+	@Column(unique = false, updatable = true)
+	private Boolean expired = false;
 }

@@ -13,7 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.worldpay.ws.offers.api.error.exception.DuplicateOfferIdException;
+import com.worldpay.ws.offers.api.error.exception.DuplicateTitleException;
 import com.worldpay.ws.offers.api.error.exception.ResourceNotFoundException;
 import com.worldpay.ws.offers.api.repository.OfferRepository;
 import com.worldpay.ws.offers.pojo.bean.Offer;
@@ -42,7 +42,7 @@ public class DefaultOfferServiceTest {
         verify(offerRepository, times(1)).save(any(Offer.class));
     }
 
-    @Test(expected = DuplicateOfferIdException.class)
+    @Test(expected = DuplicateTitleException.class)
     public void addOffer_whenOfferIsDuplicate_thenDuplicateOfferIdException() {
         // given
         givenDummyOffer();
@@ -107,10 +107,10 @@ public class DefaultOfferServiceTest {
     }
     
     private void givenDummyOffer() {
-        dummyOffer = new Offer(1L, "description", 9.99D, 1L, 0L, false);
+        dummyOffer = new Offer(1L, "title", "description", 9.99D, 1L, 0L, false);
     }
 
     private void givenDummyOffer(Long offerId) {
-        dummyOffer = new Offer(offerId, "description", 9.99D, 1L, 0L, false);
+        dummyOffer = new Offer(offerId, "title", "description", 9.99D, 1L, 0L, false);
     }
 }

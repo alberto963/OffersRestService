@@ -11,7 +11,7 @@ import javax.validation.UnexpectedTypeException;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.worldpay.ws.offers.api.error.ExceptionResponse;
-import com.worldpay.ws.offers.api.error.exception.DuplicateOfferIdException;
+import com.worldpay.ws.offers.api.error.exception.DuplicateTitleException;
 import com.worldpay.ws.offers.api.error.exception.ForeignKeyViolationException;
 import com.worldpay.ws.offers.api.error.exception.ResourceNotFoundException;
 
@@ -32,8 +32,8 @@ public class GlobalExceptionHandler extends AbstractGlobalExceptionHandler {
         return buildAndSendErrorResponse(ex, ERROR_CODE_RESOURCE_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(DuplicateOfferIdException.class)
-    public ResponseEntity<ExceptionResponse> offerIdDuplicated(DuplicateOfferIdException ex) {
+    @ExceptionHandler(DuplicateTitleException.class)
+    public ResponseEntity<ExceptionResponse> offerIdDuplicated(DuplicateTitleException ex) {
         return buildAndSendErrorResponse(ex, ERROR_CODE_DUPLICATE_OFFER_ID, HttpStatus.CONFLICT);
     }
 

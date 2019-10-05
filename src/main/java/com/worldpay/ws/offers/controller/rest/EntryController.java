@@ -29,17 +29,28 @@ public class EntryController {
         response.setStatus(HttpStatus.CREATED.value());
     }
 
-    @RequestMapping(value = "/offer/{offerId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/offerid/{offerId}", method = RequestMethod.GET)
     public Offer getOfferById(@PathVariable("offerId") long offerId) {
         return offerService.getOfferById(offerId);
     }
 
-    @RequestMapping(value = "/offer/{offerId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/offerid/{offerId}", method = RequestMethod.DELETE)
     public void deleteOfferById(@PathVariable("offerId") long offerId, HttpServletResponse response) {
         offerService.deleteOfferById(offerId);
         response.setStatus(HttpStatus.NO_CONTENT.value());
     }
 
+    @RequestMapping(value = "/offer/{title}", method = RequestMethod.GET)
+    public Offer getOfferByTitle(@PathVariable("title") String title) {
+        return offerService.getOfferByTitle(title);
+    }
+
+    @RequestMapping(value = "/offer/{title}", method = RequestMethod.DELETE)
+    public void deleteOfferById(@PathVariable("title") String title, HttpServletResponse response) {
+        offerService.deleteOfferByTitle(title);
+        response.setStatus(HttpStatus.NO_CONTENT.value());
+    }
+    
     @RequestMapping(value = "/offers", method = RequestMethod.GET)
     public List<Offer> getAllOffers() {
         return offerService.getAllOffers();
