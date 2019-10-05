@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.worldpay.ws.offers.api.service.OfferService;
-import com.worldpay.ws.offers.pojo.dto.BaseOfferDTO;
-import com.worldpay.ws.offers.pojo.dto.OfferDTO;
+import com.worldpay.ws.offers.pojo.bean.Offer;
 
 @RestController
 @RequestMapping("/worldpay/ws")
@@ -25,13 +24,13 @@ public class EntryController {
     private OfferService offerService;
 
     @RequestMapping(value = "/offer", method = RequestMethod.POST)
-    public void addOffer(@Valid @RequestBody BaseOfferDTO offerDTO, HttpServletResponse response) {
-        offerService.addOffer(offerDTO);
+    public void addOffer(@Valid @RequestBody Offer offer, HttpServletResponse response) {
+        offerService.addOffer(offer);
         response.setStatus(HttpStatus.CREATED.value());
     }
 
     @RequestMapping(value = "/offer/{offerId}", method = RequestMethod.GET)
-    public OfferDTO getOfferById(@PathVariable("offerId") long offerId) {
+    public Offer getOfferById(@PathVariable("offerId") long offerId) {
         return offerService.getOfferById(offerId);
     }
 
@@ -42,7 +41,7 @@ public class EntryController {
     }
 
     @RequestMapping(value = "/offers", method = RequestMethod.GET)
-    public List<OfferDTO> getAllOffers() {
+    public List<Offer> getAllOffers() {
         return offerService.getAllOffers();
     }
 }

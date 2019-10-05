@@ -1,9 +1,9 @@
 package com.worldpay.ws.offers.api.service.impl;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -16,9 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.worldpay.ws.offers.api.error.exception.DuplicateOfferIdException;
 import com.worldpay.ws.offers.api.error.exception.ResourceNotFoundException;
 import com.worldpay.ws.offers.api.repository.OfferRepository;
-import com.worldpay.ws.offers.api.service.impl.DefaultOfferService;
 import com.worldpay.ws.offers.pojo.bean.Offer;
-import com.worldpay.ws.offers.pojo.dto.OfferDTO;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultOfferServiceTest {
@@ -29,17 +27,16 @@ public class DefaultOfferServiceTest {
     @Mock
     private OfferRepository offerRepository;
 
-    private OfferDTO dummyOfferDTO;
     private Offer dummyOffer;
 
     @Test
     public void addOffer_whenOfferIsNotDuplicate_thenIsSaved() {
         // given
-        givenDummyOfferDTO();
-        given(offerRepository.findOne(dummyOfferDTO.getOfferId())).willReturn(null);
+        givenDummyOffer();
+        given(offerRepository.findOne(dummyOffer.getOfferId())).willReturn(null);
 
         // when
-        defaultOfferService.addOffer(dummyOfferDTO);
+        defaultOfferService.addOffer(dummyOffer);
 
         // then
         verify(offerRepository, times(1)).save(any(Offer.class));
@@ -48,11 +45,11 @@ public class DefaultOfferServiceTest {
     @Test(expected = DuplicateOfferIdException.class)
     public void addOffer_whenOfferIsDuplicate_thenDuplicateOfferIdException() {
         // given
-        givenDummyOfferDTO();
+        givenDummyOffer();
         given(offerRepository.findOne(anyLong())).willReturn(new Offer());
 
         // when
-        defaultOfferService.addOffer(dummyOfferDTO);
+        defaultOfferService.addOffer(dummyOffer);
     }
 
     @Test
@@ -62,10 +59,10 @@ public class DefaultOfferServiceTest {
         given(offerRepository.findOne(anyLong())).willReturn(dummyOffer);
 
         // when
-        OfferDTO resultOfferDTO = defaultOfferService.getOfferById(anyLong());
+        Offer resultOffer = defaultOfferService.getOfferById(anyLong());
 
         // then
-        assertNotNull(resultOfferDTO);
+        assertNotNull(resultOffer);
     }
     
     @Test
@@ -93,31 +90,27 @@ public class DefaultOfferServiceTest {
     @Test
     public void addOffers_whenOfferAreNotDuplicate_thenAreSaved() {
         // given
-        givenDummyOfferDTO(1L);
-        given(offerRepository.findOne(dummyOfferDTO.getOfferId())).willReturn(null);
+        givenDummyOffer(1L);
+        given(offerRepository.findOne(dummyOffer.getOfferId())).willReturn(null);
         
         // when
-        defaultOfferService.addOffer(dummyOfferDTO);
+        defaultOfferService.addOffer(dummyOffer);
         
-        givenDummyOfferDTO(2L);
-        given(offerRepository.findOne(dummyOfferDTO.getOfferId())).willReturn(null);
+        givenDummyOffer(2L);
+        given(offerRepository.findOne(dummyOffer.getOfferId())).willReturn(null);
         
         // when
-        defaultOfferService.addOffer(dummyOfferDTO);
+        defaultOfferService.addOffer(dummyOffer);
 
         // then
         verify(offerRepository, times(2)).save(any(Offer.class));
     }
     
-    private void givenDummyOfferDTO() {
-        dummyOfferDTO = new OfferDTO(1L, "description", 9.99D, 1L, 0L, false);
+    private void givenDummyOffer() {
+        dummyOffer = new Offer(1L, "description", 9.99D, 1L, 0L, false);
     }
 
-    private void givenDummyOfferDTO(Long offerId) {
-        dummyOfferDTO = new OfferDTO(offerId, "description", 9.99D, 1L, 0L, false);
-    }
-    
-    private void givenDummyOffer() {
-        dummyOffer = new Offer(1L, "description", 9.99, 1L, 0L);
+    private void givenDummyOffer(Long offerId) {
+        dummyOffer = new Offer(offerId, "description", 9.99D, 1L, 0L, false);
     }
 }

@@ -53,17 +53,19 @@ Below all the commands to clone, build and run the project with Maven and Java 8
 JSON examples to POST an offer:
 ````
 {
-  "offerId": 1,
-  "price": 1,
-  "duration": 1,
-  "description": "Bread"
+	"id": 0,
+	"offerId": "BREAD",
+	"price": 4.49,
+	"duration": 100,
+	"description": "1 KG white bread"
 }
 
 {
-  "offerId": 2,
-  "price": 1,
-  "duration": 1,
-  "description": "Beer"
+	"id": 1,
+	"offerId": "BEER",
+	"price": 7.29,
+	"duration": 100,
+	"description": "1 L red beer"
 }
 ````
 
@@ -73,19 +75,23 @@ JSON examples to POST an offer:
 
 Examples of returned JSONs:
 
-**http://localhost:4001/worldpay/ws/offer/1**
+**http://localhost:4001/worldpay/ws/offer/BREAD**
 ````
 {
-    "offerId": 1,
-    "description": "Bread"
+	"offerId": "BREAD",
+    "description": "Bread",
+    "price": 4.49,
+    "expired": false
 }
 ````
 
-**http://localhost:4001/worldpay/ws/offer/2**
+**http://localhost:4001/worldpay/ws/offer/BEER**
 ````
 {
-    "offerId": 2,
-    "description": "Beer"
+	"offerId": "BEER",
+	"description": "1 L red beer",
+	"price": 7.29,
+	"expired": true
 }
 ````
 ****

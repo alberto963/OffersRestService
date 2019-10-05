@@ -14,5 +14,5 @@ logging:
 spring:
    datasource:
       username: "AAA"
-      password: "AAA"
+      password: ""
      

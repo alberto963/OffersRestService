@@ -2,61 +2,51 @@ package com.worldpay.ws.offers.pojo.bean;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Offer  {
+@AllArgsConstructor
+public class Offer {
+
+	public Offer(long createdAt, String description, Double price, Long duration) {
+		this.createdAt = createdAt;
+		this.description = description;
+		this.price = price;
+		this.duration = duration;
+	}
 
 	@Id
-	@NotNull
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(unique = true, updatable = false, name = "OFFER_ID")
 	private Long offerId;
 
-	@NotNull
-	@Size(min = 1)
-	private String description;
+    @NotNull
+    @Size(min=1)
+	@Column(unique = false, updatable = false, name = "DESCRIPTION")
+    private String description;
 
-	@NotNull
+    @NotNull
 	@Column(unique = false, updatable = false, name = "PRICE")
-	private Double price;
+    private Double price;
 
-	@NotNull
+    @NotNull
 	@Column(unique = false, updatable = false, name = "DURATION")
-	private Long duration;
-
-	@NotNull
+    private Long duration;
+    
 	@Column(unique = false, updatable = false, name = "CREATED_AT")
 	private Long createdAt;
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (!(o instanceof Offer))
-			return false;
-
-		Offer offer = (Offer) o;
-
-		if (offerId != null ? !offerId.equals(offer.offerId) : offer.offerId != null)
-			return false;
-		if (description != null ? !description.equals(offer.description) : offer.description != null)
-			return false;
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = offerId != null ? offerId.hashCode() : 0;
-		result = 31 * result + (description != null ? description.hashCode() : 0);
-		return result;
-	}
+	
+	@Column(unique = false, updatable = false, name = "EXPIRED")
+	private Boolean expired;
 }

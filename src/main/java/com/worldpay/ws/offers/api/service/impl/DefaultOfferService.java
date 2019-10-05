@@ -1,9 +1,7 @@
 package com.worldpay.ws.offers.api.service.impl;
 
-import static com.worldpay.ws.offers.api.error.message.ExceptionMessage.EXCEPTION_MESSAGE_DUPLICATE_OFFER_ID;
 import static com.worldpay.ws.offers.api.error.message.ExceptionMessage.EXCEPTION_MESSAGE_OFFER_NOT_FOUND;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.worldpay.ws.offers.api.error.exception.DuplicateOfferIdException;
 import com.worldpay.ws.offers.api.error.exception.ResourceNotFoundException;
 import com.worldpay.ws.offers.api.repository.OfferRepository;
 import com.worldpay.ws.offers.api.service.OfferService;
 import com.worldpay.ws.offers.pojo.bean.Offer;
-import com.worldpay.ws.offers.pojo.dto.BaseOfferDTO;
-import com.worldpay.ws.offers.pojo.dto.OfferDTO;
 
 @Service
 public class DefaultOfferService implements OfferService {
@@ -43,46 +38,16 @@ public class DefaultOfferService implements OfferService {
 	 */
 	@Override
 	@Transactional(isolation = Isolation.SERIALIZABLE)
-	public void addOffer(BaseOfferDTO offerDTO) throws DuplicateOfferIdException {
+	public void addOffer(Offer baseOffer) {
 
-		/*
-		 * CAVEAT In Spring JPA, SimpleJpaRepository.save() is implemented as follows:
-		 * 
-		 * @Transactional public <S extends T> S save(S entity) {
-		 * if(this.entityInformation.isNew(entity)) { this.em.persist(entity); return
-		 * entity; } else { return this.em.merge(entity); } }
-		 * 
-		 * this is trying to merge if the record already exists; thus if the ID already
-		 * exists in the database, the insertion is actually treated as an update.
-		 * 
-		 * A workaround is to use an automatic generation for IDs (e.g.
-		 * use @GeneratedValue on ID) which will prevent at any time to have two
-		 * identical IDs. However, as for the @Entity Offer, it is more comfortable to
-		 * choose the offerID manually for practical purposes when testing the
-		 * application with a client.
-		 * 
-		 * At this point, to avoid the "merge" behavior, we have to make a check if the
-		 * passed ID is already occupied by another offer, and reject the insertion in
-		 * that case.
-		 */
-
-		Offer duplicateOffer = offerRepository.findOne(offerDTO.getOfferId());
-
-		if (duplicateOffer != null)
-			throw new DuplicateOfferIdException(offerDTO.getOfferId(), EXCEPTION_MESSAGE_DUPLICATE_OFFER_ID);
-
-		long offerId = offerDTO.getOfferId();
-		String description = offerDTO.getDescription();
-		double price = offerDTO.getPrice();
-		long duration = offerDTO.getDuration();
 		long createdAt = System.currentTimeMillis();
 
-		Offer offer = new Offer(offerId, description, price, duration, createdAt);
+		Offer offer = new Offer(createdAt, baseOffer.getDescription(), baseOffer.getPrice(), baseOffer.getDuration());
 		offerRepository.save(offer);
 	}
 
 	@Override
-	public OfferDTO getOfferById(long offerId) throws ResourceNotFoundException {
+	public Offer getOfferById(long offerId) throws ResourceNotFoundException {
 		Offer offer = offerRepository.findOne(offerId);
 
 		if (offer == null)
@@ -94,7 +59,7 @@ public class DefaultOfferService implements OfferService {
 		long createdAt = offer.getCreatedAt();
 		Boolean expired = System.currentTimeMillis() - createdAt > duration;
 
-		return new OfferDTO(offerId, description, price, duration, createdAt, expired);
+		return new Offer(offerId, description, price, duration, createdAt, expired);
 	}
 
 	@Override
@@ -108,19 +73,8 @@ public class DefaultOfferService implements OfferService {
 	}
 
 	@Override
-	public List<OfferDTO> getAllOffers() {
-		List<OfferDTO> offers = new LinkedList<>();
-		offerRepository.findAll().forEach(offer -> {
-			String description = offer.getDescription();
-			double price = offer.getPrice();
-			long duration = offer.getDuration();
-			long createdAt = offer.getCreatedAt();
-			Boolean expired = System.currentTimeMillis() - createdAt > duration;
-
-			Long offerId = offer.getOfferId();
-			OfferDTO o = new OfferDTO(offerId , description, price, duration, createdAt, expired);
-			offers.add(o);
-		});
+	public List<Offer> getAllOffers() {
+		List<Offer> offers = (List<Offer>) offerRepository.findAll();
 
 		return offers;
 	}

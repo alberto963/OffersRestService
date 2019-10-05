@@ -3,8 +3,6 @@ package com.worldpay.ws.offers.api.repository.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import java.util.List;
-
 import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
@@ -31,37 +29,37 @@ public class RepositoriesIntegrationTest {
     @Test
     public void save_whenOfferIsSaved_thenCanBeRetrieved() {
         // given
-        Offer validOffer = new Offer(1L, "description", 9.99D, 1L, 0L);
+        Offer validOffer = new Offer(999999L, "description", 9.99D, 0L);
         testEntityManager.persist(validOffer);
         testEntityManager.flush();
 
         // when
-        Offer found = offerRepository.findOne(validOffer.getOfferId());
+        Offer found = offerRepository.findOne(3L);
 
         // then
-        assertEquals(validOffer.getOfferId(), found.getOfferId());
+        assertEquals(validOffer.getDescription(), found.getDescription());
     }
 
     @Test
     public void save_whenOfferIsSaved_thenCanBeDeleted() {
         // given
-        Offer validOffer = new Offer(1L, "description", 9.99D, 1L, 0L);
+        Offer validOffer = new Offer(999999L, "description", 9.99D, 0L);;
         testEntityManager.persist(validOffer);
         testEntityManager.flush();
 
         // when
-        offerRepository.delete(validOffer.getOfferId());
+        offerRepository.delete(4L);
 
-        Offer notFount = offerRepository.findOne(validOffer.getOfferId());
+        Offer notFount = offerRepository.findOne(4L);
         assertNull(notFount);
     }
     
     @Test
     public void save_whenOfferAreSaved_thenCanBeAllRetrieved() {
         // given
-        Offer validOffer1 = new Offer(1L, "description", 9.99D, 1L, 0L);
+        Offer validOffer1 = new Offer(999999L, "description", 9.99D, 1L);
         testEntityManager.persist(validOffer1);
-        Offer validOffer2 = new Offer(2L, "description", 9.99D, 1L, 0L);
+        Offer validOffer2 = new Offer(999999L, "description", 9.99D, 1L);
         testEntityManager.persist(validOffer2);
         testEntityManager.flush();
 
@@ -75,7 +73,7 @@ public class RepositoriesIntegrationTest {
     @Test(expected = ConstraintViolationException.class)
     public void validation_whenOfferHasEmptyDescription_thenConstraintViolationException() {
         // given
-        Offer invalidOffer = new Offer(1L, "", 9.99D, 1L, 0L);
+        Offer invalidOffer = new Offer(999999L, "", 9.99D, 1L);
 
         // when
         testEntityManager.persist(invalidOffer);
@@ -85,7 +83,7 @@ public class RepositoriesIntegrationTest {
     @Test(expected = ConstraintViolationException.class)
     public void validation_whenOfferHasMissingDescription_thenConstraintViolationException() {
         // given
-        Offer invalidOffer = new Offer(1L, null, 9.99D, 1L, 0L);
+        Offer invalidOffer = new Offer(999999L, null, 9.99D, 1L);
 
         // when
         testEntityManager.persist(invalidOffer);
