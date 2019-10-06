@@ -41,8 +41,8 @@ Below all the commands to clone, build and run the project with Maven and Java 8
 - `cd OffersRestService`
 - `mvn -T 4 clean install`
 - `java -jar target/com-worldpay-ws-offers-web-1.0.jar`
-- the embedded servlet container starts at **http://localhost:8091**
-- the H2 database console starts at **http://localhost:8091/console**
+- the embedded servlet container starts at `http://localhost:8091`
+- the H2 database console starts at **http://localhost:8091/console** (user AAA password null)
 
 ## Running
 
