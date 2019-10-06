@@ -25,7 +25,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.worldpay.ws.offers.api.service.OfferService;
 import com.worldpay.ws.offers.pojo.bean.Offer;
 
-/* CONTROLLER INTEGRATION TESTING using MockMvc instance to setup a Spring MVC context with a web server */
+/*
+ * CONTROLLER INTEGRATION TESTING using MockMvc instance to setup a Spring MVC context with a web server
+ */
 @RunWith(SpringRunner.class)
 @WebMvcTest(controllers = EntryController.class, secure = false)
 public class EntryControllerTest {
@@ -43,6 +45,7 @@ public class EntryControllerTest {
 
 	private static final String BASE_URL = "/worldpay/ws";
 	private static final String OFFER_SUBPATH = "offer";
+	private static final String OFFERID_SUBPATH = "offerid";
 	private static final String OFFERS_SUBPATH = "offers";
 
 	@Test
@@ -77,7 +80,7 @@ public class EntryControllerTest {
 
 		// when-then
 		mockMvc.perform(
-				get(buildGetUrlWithIdVariable(OFFER_SUBPATH), dummyOffer.getOfferId()).contentType(APPLICATION_JSON))
+				get(buildGetUrlWithIdVariable(OFFERID_SUBPATH), dummyOffer.getOfferId()).contentType(APPLICATION_JSON))
 				.andExpect(jsonPath("$.offerId", is(dummyOffer.getOfferId().intValue())))
 				.andExpect(jsonPath("$.description", is(dummyOffer.getDescription())));
 	}
@@ -111,9 +114,9 @@ public class EntryControllerTest {
 	}
 
 	@Test
-	public void post_whenOfferHasMissingId_thenResponseIs400() throws Exception {
+	public void post_whenOfferHasMissingTitle_thenResponseIs400() throws Exception {
 		// given
-		Offer invalidOffer = new Offer(null, "title", "description", 9.99D, 1L, 0L, false);
+		Offer invalidOffer = new Offer(1L, null, "description", 9.99D, 1L, 0L, false);
 		doNothing().when(offerService).addOffer(invalidOffer);
 
 		// when-then

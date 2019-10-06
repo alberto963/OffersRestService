@@ -99,5 +99,4 @@ public class DefaultOfferService implements OfferService {
 
 		return offers;
 	}
-
 }

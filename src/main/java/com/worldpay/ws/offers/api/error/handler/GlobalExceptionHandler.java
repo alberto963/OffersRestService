@@ -1,7 +1,6 @@
 package com.worldpay.ws.offers.api.error.handler;
 
-import static com.worldpay.ws.offers.api.error.message.ErrorCode.ERROR_CODE_DUPLICATE_OFFER_ID;
-import static com.worldpay.ws.offers.api.error.message.ErrorCode.ERROR_CODE_FOREIGN_KEY_VIOLATION;
+import static com.worldpay.ws.offers.api.error.message.ErrorCode.ERROR_CODE_DUPLICATE_OFFER_TITLE;
 import static com.worldpay.ws.offers.api.error.message.ErrorCode.ERROR_CODE_MALFORMED_REQUEST;
 import static com.worldpay.ws.offers.api.error.message.ErrorCode.ERROR_CODE_RESOURCE_NOT_FOUND;
 import static com.worldpay.ws.offers.api.error.message.ErrorCode.ERRROR_CODE_CONSTRAINT_VIOLATION;
@@ -12,7 +11,6 @@ import javax.validation.UnexpectedTypeException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.worldpay.ws.offers.api.error.ExceptionResponse;
 import com.worldpay.ws.offers.api.error.exception.DuplicateTitleException;
-import com.worldpay.ws.offers.api.error.exception.ForeignKeyViolationException;
 import com.worldpay.ws.offers.api.error.exception.ResourceNotFoundException;
 
 import org.springframework.http.HttpStatus;
@@ -33,13 +31,8 @@ public class GlobalExceptionHandler extends AbstractGlobalExceptionHandler {
     }
 
     @ExceptionHandler(DuplicateTitleException.class)
-    public ResponseEntity<ExceptionResponse> offerIdDuplicated(DuplicateTitleException ex) {
-        return buildAndSendErrorResponse(ex, ERROR_CODE_DUPLICATE_OFFER_ID, HttpStatus.CONFLICT);
-    }
-
-    @ExceptionHandler(ForeignKeyViolationException.class)
-    public ResponseEntity<ExceptionResponse> foreignKeyViolated(ForeignKeyViolationException ex) {
-        return buildAndSendErrorResponse(ex, ERROR_CODE_FOREIGN_KEY_VIOLATION, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ExceptionResponse> offerTitleDuplicated(DuplicateTitleException ex) {
+        return buildAndSendErrorResponse(ex, ERROR_CODE_DUPLICATE_OFFER_TITLE, HttpStatus.CONFLICT);
     }
 
     // HANDLING SOME NON-CUSTOM EXCEPTIONS

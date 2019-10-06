@@ -1,6 +1,7 @@
 package com.worldpay.ws.offers.api.service.impl;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
@@ -33,7 +34,7 @@ public class DefaultOfferServiceTest {
     public void addOffer_whenOfferIsNotDuplicate_thenIsSaved() {
         // given
         givenDummyOffer();
-        given(offerRepository.findOne(dummyOffer.getOfferId())).willReturn(null);
+        given(offerRepository.findByTitle(dummyOffer.getTitle())).willReturn(null);
 
         // when
         defaultOfferService.addOffer(dummyOffer);
@@ -46,7 +47,7 @@ public class DefaultOfferServiceTest {
     public void addOffer_whenOfferIsDuplicate_thenDuplicateOfferIdException() {
         // given
         givenDummyOffer();
-        given(offerRepository.findOne(anyLong())).willReturn(new Offer());
+        given(offerRepository.findByTitle(anyString())).willReturn(new Offer());
 
         // when
         defaultOfferService.addOffer(dummyOffer);
@@ -87,17 +88,26 @@ public class DefaultOfferServiceTest {
         defaultOfferService.getOfferById(anyLong());
     }
 
+    @Test(expected = ResourceNotFoundException.class)
+    public void getOfferByTitle_whenOfferNotExist_thenResourceNotFoundException() {
+        // given
+        given(offerRepository.findByTitle(anyString())).willReturn(null);
+
+        // when
+        defaultOfferService.getOfferByTitle(anyString());
+    }
+    
     @Test
     public void addOffers_whenOfferAreNotDuplicate_thenAreSaved() {
         // given
-        givenDummyOffer(1L);
-        given(offerRepository.findOne(dummyOffer.getOfferId())).willReturn(null);
+        givenDummyOffer("TT1");
+        given(offerRepository.findByTitle(anyString())).willReturn(null);
         
         // when
         defaultOfferService.addOffer(dummyOffer);
         
-        givenDummyOffer(2L);
-        given(offerRepository.findOne(dummyOffer.getOfferId())).willReturn(null);
+        givenDummyOffer("TT2");
+        given(offerRepository.findByTitle(anyString())).willReturn(null);
         
         // when
         defaultOfferService.addOffer(dummyOffer);
@@ -110,7 +120,7 @@ public class DefaultOfferServiceTest {
         dummyOffer = new Offer(1L, "title", "description", 9.99D, 1L, 0L, false);
     }
 
-    private void givenDummyOffer(Long offerId) {
-        dummyOffer = new Offer(offerId, "title", "description", 9.99D, 1L, 0L, false);
+    private void givenDummyOffer(String title) {
+        dummyOffer = new Offer(999999L, title, "description", 9.99D, 1L, 0L, false);
     }
 }

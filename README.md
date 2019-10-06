@@ -3,17 +3,15 @@
 </h1>
 
 A RESTful facade backend API with one service:
-- Offer service (*offer entity: id, title, description, price, duration, expired*)
+- Offer service (*offer entity: id, title, description, price, created at, duration, expired*)
 
 ## Toolset
 - Spring Boot
 - Spring MVC
 - Spring Data JPA
-  * out-of-the-box DAO-generation at runtime via method-naming conventions
-  * declarative transaction-boundaries control
+- Lombok
 - Hibernate
 - Jackson Annotations
-  * custom serialization of references (@JsonIdentityInfo, @JsonIdentityReference)
 - H2 embedded in memory db
 - Maven
 - Git
@@ -23,10 +21,7 @@ A RESTful facade backend API with one service:
 ### Implemented requirements
 - endpoint for providing current status of an offer (in JSON)
 - endpoint for creating and deleting offers
-- backend services able to handle multiple POST requests independently at the same time
-
-### Nuances
-- upon POSTing offers in parallel, a concurrency-control through transactional serialization is enforced to prevent phantom-reads
+- backend services able to handle multiple POST requests independently at the same time (with generated ids)
 
 ### Unit and Integration Testing
 - mocking
@@ -35,7 +30,7 @@ A RESTful facade backend API with one service:
 - controller integration testing using *MockMvc* instance to setup a Spring MVC context with a web server
 
 ## Prerequisites
-- Requires at least Java Runtime 1.8 - [download](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
+- Requires at least Java Runtime 1.8
 
 ## Quick start
 Below all the commands to clone, build and run the project with Maven and Java 8 JDK:
