@@ -30,7 +30,7 @@ A RESTful facade backend API with one service:
 - controller integration testing using *MockMvc* instance to setup a Spring MVC context with a web server
 
 ## Prerequisites
-- Requires at least Java Runtime 1.8
+- Requires at least Java Runtime 1.8 and maven 3.6
 
 ## Quick start
 Below all the commands to clone, build and run the project with Maven and Java 8 JDK:
@@ -45,6 +45,7 @@ Below all the commands to clone, build and run the project with Maven and Java 8
 ### POST offers 
 - URL is `http://localhost:8091/worldpay/ws/offer`
 
+**http://localhost:8091/worldpay/ws/offer**
 JSON examples to POST an offer:
 ````
 {
@@ -53,13 +54,46 @@ JSON examples to POST an offer:
 	"duration": 100,
 	"description": "1 KG white bread"
 }
+````
 
+**http://localhost:8091/worldpay/ws/offer**
+JSON examples to POST an offer:
+````
 {
 	"title": "BEER",
 	"price": 7.29,
-	"duration": 100,
+	"duration": 100000,
 	"description": "1 L red beer"
 }
+````
+### GET all offers
+
+- URL is `http://localhost:8091/worldpay/ws/offers`
+
+Examples of returned JSONs:
+
+**http://localhost:8091/worldpay/ws/offers**
+````
+[
+	{
+		"offerId": 1,
+		"title": "BREAD",
+		"description": "1 KG white bread",
+		"price": 4.49,
+		"duration": 100,
+		"createdAt": 1570359705332,
+		"expired": true
+	},
+	{
+		"offerId": 2,
+		"title": "BEER",
+		"description": "1 L red beer",
+		"price": 7.29,
+		"duration": 20,
+		"createdAt": 1570359721760,
+		"expired": false
+	}
+]
 ````
 
 ### GET offer by title
@@ -71,21 +105,27 @@ Examples of returned JSONs:
 **http://localhost:8091/worldpay/ws/offer/BREAD**
 ````
 {
-	"title": "BREAD",
-    "description": "Bread",
-    "price": 4.49,
-    "expired": false
+		"offerId": 1,
+		"title": "BREAD",
+		"description": "1 KG white bread",
+		"price": 4.49,
+		"duration": 100,
+		"createdAt": 1570359705332,
+		"expired": true
 }
 ````
 
 **http://localhost:8091/worldpay/ws/offer/BEER**
 ````
-{
-	"title": "BEER",
-	"description": "1 L red beer",
-	"price": 7.29,
-	"expired": true
-}
+	{
+		"offerId": 2,
+		"title": "BEER",
+		"description": "1 L red beer",
+		"price": 7.29,
+		"duration": 20,
+		"createdAt": 1570359721760,
+		"expired": false
+	}
 ````
 
 ### GET offer by id
@@ -97,21 +137,27 @@ Examples of returned JSONs:
 **http://localhost:8091/worldpay/ws/offerid/1**
 ````
 {
-	"title": "BREAD",
-    "description": "Bread",
-    "price": 4.49,
-    "expired": false
+		"offerId": 1,
+		"title": "BREAD",
+		"description": "1 KG white bread",
+		"price": 4.49,
+		"duration": 100,
+		"createdAt": 1570359705332,
+		"expired": true
 }
 ````
 
 **http://localhost:8091/worldpay/ws/offerid/2**
 ````
-{
-	"title": "BEER",
-	"description": "1 L red beer",
-	"price": 7.29,
-	"expired": true
-}
+	{
+		"offerId": 2,
+		"title": "BEER",
+		"description": "1 L red beer",
+		"price": 7.29,
+		"duration": 20,
+		"createdAt": 1570359721760,
+		"expired": false
+	}
 ````
 ### DELETE offer by title
 
