@@ -2,7 +2,9 @@
     OfferRestService
 </h1>
 
-A RESTful facade backend API with one service:
+<p>It is a simple RESTful software service that allow a merchant to create a new simple offer. Offers, once created, may be queried. After the period of time defined on the offer it should expire and further requests to query the offer should reflect that somehow. Before an offer has expired users may cancel it.</p>
+
+<p>Implementation of a RESTful facade backend API with one service:</p>
 - Offer service (*offer entity: id, title, description, price, created at, duration, expired*)
 
 ## Toolset
