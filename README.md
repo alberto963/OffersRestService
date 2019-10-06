@@ -91,7 +91,7 @@ Examples of returned JSONs:
 		"title": "BEER",
 		"description": "1 L red beer",
 		"price": 7.29,
-		"duration": 20,
+		"duration": 100000,
 		"createdAt": 1570359721760,
 		"expired": false
 	}
@@ -124,7 +124,7 @@ Examples of returned JSONs:
 		"title": "BEER",
 		"description": "1 L red beer",
 		"price": 7.29,
-		"duration": 20,
+		"duration": 100000,
 		"createdAt": 1570359721760,
 		"expired": false
 	}
@@ -156,7 +156,7 @@ Examples of returned JSONs:
 		"title": "BEER",
 		"description": "1 L red beer",
 		"price": 7.29,
-		"duration": 20,
+		"duration": 100000,
 		"createdAt": 1570359721760,
 		"expired": false
 	}
