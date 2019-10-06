@@ -13,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.worldpay.ws.offers.api.error.exception.DuplicateTitleException;
 import com.worldpay.ws.offers.api.repository.OfferRepository;
 import com.worldpay.ws.offers.pojo.bean.Offer;
 

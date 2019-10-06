@@ -24,6 +24,7 @@
 - endpoint for providing current status of an offer (in JSON)
 - endpoint for creating and deleting offers
 - backend services able to handle multiple POST requests independently at the same time (with generated ids)
+- H2 console for inspecting database contents
 
 ### Unit and Integration Testing
 - mocking
@@ -41,6 +42,7 @@ Below all the commands to clone, build and run the project with Maven and Java 8
 - `mvn -T 4 clean install`
 - `java -jar target/com-worldpay-ws-offers-web-1.0.jar`
 - the embedded servlet container starts at `http://localhost:8091`
+- the H2 database console starts at `http://localhost:8091/console`
 
 ## Running
 
@@ -121,7 +123,7 @@ Examples of returned JSONs:
 
 **http://localhost:8091/worldpay/ws/offer/BEER**
 ````
-	{
+{
 		"offerId": 2,
 		"title": "BEER",
 		"description": "1 L red beer",
@@ -129,7 +131,7 @@ Examples of returned JSONs:
 		"duration": 100000,
 		"createdAt": 1570359721760,
 		"expired": false
-	}
+}
 ````
 
 ### GET offer by id
@@ -153,7 +155,7 @@ Examples of returned JSONs:
 
 **http://localhost:8091/worldpay/ws/offerid/2**
 ````
-	{
+{
 		"offerId": 2,
 		"title": "BEER",
 		"description": "1 L red beer",
@@ -161,7 +163,7 @@ Examples of returned JSONs:
 		"duration": 100000,
 		"createdAt": 1570359721760,
 		"expired": false
-	}
+}
 ````
 ### DELETE offer by title
 
