@@ -45,7 +45,7 @@ Below all the commands to clone, build and run the project with Maven and Java 8
 ### POST offers 
 - URL is `http://localhost:8091/worldpay/ws/offer`
 
-**http://localhost:8091/worldpay/ws/offer**
+http://localhost:8091/worldpay/ws/offer
 JSON examples to POST an offer:
 ````
 {
@@ -56,7 +56,7 @@ JSON examples to POST an offer:
 }
 ````
 
-**http://localhost:8091/worldpay/ws/offer**
+http://localhost:8091/worldpay/ws/offer
 JSON examples to POST an offer:
 ````
 {
@@ -165,9 +165,9 @@ Examples of returned JSONs:
 
 Examples:
 
-**http://localhost:8091/worldpay/ws/offer/BREAD**
+http://localhost:8091/worldpay/ws/offer/BREAD
 
-**http://localhost:8091/worldpay/ws/offer/BEER**
+http://localhost:8091/worldpay/ws/offer/BEER
 
 
 ### DELETE offer by id
@@ -176,8 +176,8 @@ Examples:
 
 Examples:
 
-**http://localhost:8091/worldpay/ws/offerid/1**
+http://localhost:8091/worldpay/ws/offerid/1
 
-**http://localhost:8091/worldpay/ws/offerid/2**
+http://localhost:8091/worldpay/ws/offerid/2
 
 ****
