@@ -11,7 +11,7 @@
 - Spring Boot
 - Spring MVC
 - Spring Data JPA
-- Lombok
+- Lombok (Note: if importing in eclipse, follow procedure in **https://stackoverflow.com/questions/11803948/lombok-is-not-generating-getter-and-setter**)
 - Hibernate
 - Jackson Annotations
 - H2 embedded in memory db
